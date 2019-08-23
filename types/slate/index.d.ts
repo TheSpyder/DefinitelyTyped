@@ -1057,6 +1057,7 @@ export interface OperationProperties {
         | MarkProperties
         | AnnotationProperties;
     newPath?: Immutable.List<number>;
+    marks?: Immutable.List<Mark>;
     mark?: Mark;
     data?: Data | { [key: string]: any };
     annotation?: Annotation;
@@ -1083,6 +1084,7 @@ export interface OperationJSON {
         | MarkJSON
         | AnnotationJSON;
     newPath?: number[];
+    marks?: MarkJSON[];
     mark?: MarkJSON;
     data?: { [key: string]: any };
     annotation?: AnnotationJSON;
@@ -1114,6 +1116,7 @@ export class InsertTextOperation extends Operation {
     path: Immutable.List<number>;
     offset: number;
     text: string;
+    marks: Immutable.List<Mark>;
     data: Data;
 }
 

@@ -389,6 +389,7 @@ editor
     path: List([0]),
     offset: 0,
     text: 'text',
+    marks: List([Mark.create({ type: 'test_mark' })]),
     data: Data.create({})
 })
 .applyOperation({
