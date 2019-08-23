@@ -1036,24 +1036,6 @@ export class Point extends Immutable.Record({}) {
     unset(): this;
 }
 
-export type Operation =
-    | InsertTextOperation
-    | RemoveTextOperation
-    | AddMarkOperation
-    | RemoveMarkOperation
-    | SetMarkOperation
-    | AddAnnotationOperation
-    | RemoveAnnotationOperation
-    | SetAnnotationOperation
-    | InsertNodeOperation
-    | MergeNodeOperation
-    | MoveNodeOperation
-    | RemoveNodeOperation
-    | SetNodeOperation
-    | SplitNodeOperation
-    | SetSelectionOperation
-    | SetValueOperation;
-
 export interface OperationProperties {
     object?: "operation";
     type: string;
@@ -1106,7 +1088,7 @@ export interface OperationJSON {
     annotation?: AnnotationJSON;
 }
 
-export class BaseOperation extends Immutable.Record({}) {
+export class Operation extends Immutable.Record({}) {
     object: "operation";
     type: string;
 
@@ -1127,7 +1109,7 @@ export class BaseOperation extends Immutable.Record({}) {
     invert(): this;
 }
 
-export class InsertTextOperation extends BaseOperation {
+export class InsertTextOperation extends Operation {
     type: "insert_text";
     path: Immutable.List<number>;
     offset: number;
@@ -1135,7 +1117,7 @@ export class InsertTextOperation extends BaseOperation {
     data: Data;
 }
 
-export class RemoveTextOperation extends BaseOperation {
+export class RemoveTextOperation extends Operation {
     type: "remove_text";
     path: Immutable.List<number>;
     offset: number;
@@ -1143,21 +1125,21 @@ export class RemoveTextOperation extends BaseOperation {
     data: Data;
 }
 
-export class AddMarkOperation extends BaseOperation {
+export class AddMarkOperation extends Operation {
     type: "add_mark";
     path: Immutable.List<number>;
     mark: Mark;
     data: Data;
 }
 
-export class RemoveMarkOperation extends BaseOperation {
+export class RemoveMarkOperation extends Operation {
     type: "remove_mark";
     path: Immutable.List<number>;
     mark: Mark;
     data: Data;
 }
 
-export class SetMarkOperation extends BaseOperation {
+export class SetMarkOperation extends Operation {
     type: "set_mark";
     path: Immutable.List<number>;
     properties: MarkProperties;
@@ -1165,33 +1147,33 @@ export class SetMarkOperation extends BaseOperation {
     data: Data;
 }
 
-export class AddAnnotationOperation extends BaseOperation {
+export class AddAnnotationOperation extends Operation {
     type: "add_annotation";
     annotation: Annotation;
     data: Data;
 }
 
-export class RemoveAnnotationOperation extends BaseOperation {
+export class RemoveAnnotationOperation extends Operation {
     type: "remove_annotation";
     annotation: Annotation;
     data: Data;
 }
 
-export class SetAnnotationOperation extends BaseOperation {
+export class SetAnnotationOperation extends Operation {
     type: "set_annotation";
     properties: AnnotationProperties;
     newProperties: AnnotationProperties;
     data: Data;
 }
 
-export class InsertNodeOperation extends BaseOperation {
+export class InsertNodeOperation extends Operation {
     type: "insert_node";
     path: Immutable.List<number>;
     node: Node;
     data: Data;
 }
 
-export class MergeNodeOperation extends BaseOperation {
+export class MergeNodeOperation extends Operation {
     type: "merge_node";
     path: Immutable.List<number>;
     position: number;
@@ -1199,21 +1181,21 @@ export class MergeNodeOperation extends BaseOperation {
     data: Data;
 }
 
-export class MoveNodeOperation extends BaseOperation {
+export class MoveNodeOperation extends Operation {
     type: "move_node";
     path: Immutable.List<number>;
     newPath: Immutable.List<number>;
     data: Data;
 }
 
-export class RemoveNodeOperation extends BaseOperation {
+export class RemoveNodeOperation extends Operation {
     type: "remove_node";
     path: Immutable.List<number>;
     node: Node;
     data: Data;
 }
 
-export class SetNodeOperation extends BaseOperation {
+export class SetNodeOperation extends Operation {
     type: "set_node";
     path: Immutable.List<number>;
     properties: NodeProperties;
@@ -1221,7 +1203,7 @@ export class SetNodeOperation extends BaseOperation {
     data: Data;
 }
 
-export class SplitNodeOperation extends BaseOperation {
+export class SplitNodeOperation extends Operation {
     type: "split_node";
     path: Immutable.List<number>;
     position: number;
@@ -1230,14 +1212,14 @@ export class SplitNodeOperation extends BaseOperation {
     data: Data;
 }
 
-export class SetSelectionOperation extends BaseOperation {
+export class SetSelectionOperation extends Operation {
     type: "set_selection";
     properties: SelectionProperties;
     newProperties: SelectionProperties;
     data: Data;
 }
 
-export class SetValueOperation extends BaseOperation {
+export class SetValueOperation extends Operation {
     type: "set_value";
     properties: ValueProperties;
     newProperties: ValueProperties;
