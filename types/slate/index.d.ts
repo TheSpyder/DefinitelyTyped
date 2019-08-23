@@ -1076,7 +1076,7 @@ export interface OperationJSON {
     position?: number;
     path?: number[];
     offset?: number;
-    node?: Node;
+    node?: NodeJSON;
     newProperties?:
         | NodeJSON
         | ValueJSON

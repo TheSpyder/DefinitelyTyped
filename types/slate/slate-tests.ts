@@ -393,8 +393,23 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "insert_text",
+    path: [0],
+    offset: 0,
+    text: 'text',
+    marks: [{ type: 'test_mark' }],
+    data: Data.create({})
+})
+.applyOperation({
     type: "remove_text",
     path: List([0]),
+    offset: 0,
+    text: 'text',
+    data: Data.create({})
+})
+.applyOperation({
+    type: "remove_text",
+    path: [0],
     offset: 0,
     text: 'text',
     data: Data.create({})
@@ -406,9 +421,21 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "add_mark",
+    path: [0],
+    mark: {type: 'test_mark'},
+    data: Data.create({})
+})
+.applyOperation({
     type: "remove_mark",
     path: List([0]),
     mark: Mark.create({type: 'test_mark'}),
+    data: Data.create({})
+})
+.applyOperation({
+    type: "remove_mark",
+    path: [0],
+    mark: {type: 'test_mark'},
     data: Data.create({})
 })
 .applyOperation({
@@ -419,13 +446,30 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "set_mark",
+    path: [0],
+    properties: {type: 'test_mark'},
+    newProperties: {type: 'new_test_mark'},
+    data: Data.create({})
+})
+.applyOperation({
     type: "add_annotation",
     annotation: Annotation.create({ key: 'a', type: 'test_annotation'}),
     data: Data.create({})
 })
 .applyOperation({
+    type: "add_annotation",
+    annotation: { key: 'a', type: 'test_annotation'},
+    data: Data.create({})
+})
+.applyOperation({
     type: "remove_annotation",
     annotation: Annotation.create({ key: 'a', type: 'test_annotation'}),
+    data: Data.create({})
+})
+.applyOperation({
+    type: "remove_annotation",
+    annotation: { key: 'a', type: 'test_annotation'},
     data: Data.create({})
 })
 .applyOperation({
@@ -441,8 +485,21 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "insert_node",
+    path: [0],
+    node: {type: 'block'},
+    data: Data.create({})
+})
+.applyOperation({
     type: "merge_node",
     path: List([0]),
+    position: 0,
+    properties: {type: 'node'},
+    data: Data.create({})
+})
+.applyOperation({
+    type: "merge_node",
+    path: [0],
     position: 0,
     properties: {type: 'node'},
     data: Data.create({})
@@ -454,9 +511,21 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "move_node",
+    path: [0],
+    newPath: [1],
+    data: Data.create({})
+})
+.applyOperation({
     type: "remove_node",
     path: List([0]),
     node: Block.create({type: 'block'}),
+    data: Data.create({})
+})
+.applyOperation({
+    type: "remove_node",
+    path: [0],
+    node: {type: 'block'},
     data: Data.create({})
 })
 .applyOperation({
@@ -467,8 +536,23 @@ editor
     data: Data.create({})
 })
 .applyOperation({
+    type: "set_node",
+    path: [0],
+    properties: {type: 'node'},
+    newProperties: {type: 'new_node'},
+    data: Data.create({})
+})
+.applyOperation({
     type: "split_node",
     path: List([0]),
+    position: 0,
+    target: 1,
+    properties: {type: 'block'},
+    data: Data.create({})
+})
+.applyOperation({
+    type: "split_node",
+    path: [0],
     position: 0,
     target: 1,
     properties: {type: 'block'},
