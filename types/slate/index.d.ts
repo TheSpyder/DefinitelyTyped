@@ -12,10 +12,10 @@
 //                 Benjamin Evenson <https://github.com/benjiro>
 //                 Han Jeon <https://github.com/hanstar17>
 //                 Kay Delaney <https://github.com/kaydelaney>
+//                 Andrew Herron <https://github.com/TheSpyder>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 // TypeScript Version: 2.8
 import * as Immutable from "immutable";
-import { SyntheticEvent } from "react";
 
 export class Data extends Immutable.Record({}) {
     [key: string]: any;
