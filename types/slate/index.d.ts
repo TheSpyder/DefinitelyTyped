@@ -93,32 +93,125 @@ export class Value extends Immutable.Record({}) {
     document: Document;
     selection: Selection;
 
+    /**
+     * Get the current start text node's closest block parent.
+     */
     readonly startBlock: Block;
+    /**
+     * Get the current end text node's closest block parent.
+     */
     readonly endBlock: Block;
+    /**
+     * Get the current anchor text node's closest block parent.
+     */
     readonly anchorBlock: Block;
+
+    /**
+     * Get the current focus text node's closest block parent.
+     */
     readonly focusBlock: Block;
+
+    /**
+     * Get the next block node.
+     */
     readonly nextBlock: Block;
+
+    /**
+     * Get the previous block node.
+     */
     readonly previousBlock: Block;
 
+
+    /**
+     * Get the current start text node's closest inline parent.
+     */
     readonly startInline: Inline;
+
+    /**
+     * Get the current end text node's closest inline parent.
+     */
     readonly endInline: Inline;
+
+    /**
+     * Get the current anchor text node's closest inline parent.
+     */
     readonly anchorInline: Inline;
+
+    /**
+     * Get the current focus text node's closest inline parent.
+     */
     readonly focusInline: Inline;
+
+    /**
+     * Get the next inline node.
+     */
     readonly nextInline: Inline;
+
+    /**
+     * Get the previous inline node.
+     */
     readonly previousInline: Inline;
 
+
+    /**
+     * Get the current start text node.
+     */
     readonly startText: Text;
+
+    /**
+     * Get the current end node.
+     */
     readonly endText: Text;
+
+    /**
+     * Get the current anchor node.
+     */
     readonly anchorText: Text;
+
+    /**
+     * Get the current focus node.
+     */
     readonly focusText: Text;
+
+    /**
+     * Get the next text node.
+     */
     readonly nextText: Text;
+
+    /**
+     * Get the previous text node.
+     */
     readonly previousText: Text;
 
+
+    /**
+     * Get the marks of the current selection.
+     */
     readonly marks: Immutable.OrderedSet<Mark>;
+
+    /**
+     * Get the active marks of the current selection.
+     */
     readonly activeMarks: Immutable.OrderedSet<Mark>;
+
+    /**
+     * Get the block nodes in the current selection.
+     */
     readonly blocks: Immutable.List<Block>;
+
+    /**
+     * Get the fragment of the current selection.
+     */
     readonly fragment: Document;
+
+    /**
+     * Get the bottom-most inline nodes in the current selection.
+     */
     readonly inlines: Immutable.List<Inline>;
+
+    /**
+     * Get the text nodes in the current selection.
+     */
     readonly texts: Immutable.List<Text>;
 
     static create(properties?: ValueProperties | ValueJSON | Value): Value;
@@ -137,43 +230,109 @@ export class Value extends Immutable.Record({}) {
         preserveData?: boolean,
         preserveSelection?: boolean
     }): ValueJSON;
-    addAnnotation(annotation: Annotation | AnnotationProperties | AnnotationJSON): Value;
+
+
+
+    /**
+     * Add an `annotation` to the value.
+     */
+    addAnnotation(annotation: Annotation | AnnotationProperties | Range | RangeProperties | AnnotationJSON): Value;
+
+    /**
+     * Add `mark` to text at `path`.
+     */
     addMark(path: Path, mark: MarkProperties | MarkJSON | Mark | string): Value;
+
+    /**
+     * Insert a `node`.
+     */
     insertNode(path: Path, node: Node): Value;
-    insertText(
-        path: Path,
-        offset: number,
-        text: string,
-    ): Value;
+
+    /**
+     * Insert `text` at `offset` in node by `path`.
+     */
+    insertText(path: Path, offset: number, text: string): Value;
+
+    /**
+     * Merge a node backwards its previous sibling.
+     */
     mergeNode(path: Path): Value;
-    moveNode(path: Immutable.List<number>, newPath: Immutable.List<number>, newIndex?: number): Value;
+
+    /**
+     * Move a node by `path` to `newPath`.
+     *
+     * A `newIndex` can be provided when move nodes by `key`, to account for not
+     * being able to have a key for a location in the tree that doesn't exist yet.
+     */
+    moveNode(path: Path, newPath: Path, newIndex?: number): Value;
+
+    /**
+     * Remove an `annotation` from the value.
+     */
     removeAnnotation(annotation: Annotation | AnnotationProperties | AnnotationJSON): Value;
+
+    /**
+     * Remove `mark` at `path`.
+     */
     removeMark(path: Path, mark: MarkProperties | MarkJSON | Mark | string): Value;
+
+    /**
+     * Remove a node by `path`.
+     */
     removeNode(path: Path): Value;
+
+    /**
+     * Remove `text` at `offset` in node by `path`.
+     */
     removeText(path: Path, offset: number, text: string): Value;
+
+    /**
+     * Add an `annotation` to the value.
+     */
     setAnnotation(
         properties: AnnotationProperties | AnnotationJSON | Annotation,
         newProperties: AnnotationProperties | AnnotationJSON | Annotation
     ): Value;
+
+    /**
+     * Set `properties` on a node.
+     */
     setNode(path: Path, properties: NodeProperties): Value;
-    setMark(
-        path: Path,
-        properties: MarkProperties,
-        newProperties: MarkProperties
-    ): Value;
+
+    /**
+     * Set `properties` on `mark` on text at `offset` and `length` in node.
+     */
+    setMark(path: Path, properties: MarkProperties, newProperties: MarkProperties): Value;
+
+    /**
+     * Set `properties` on the value.
+     */
     setProperties(properties: ValueProperties): Value;
+
+    /**
+     * Set `properties` on the selection.
+     */
     setSelection(properties:
         | RangeTypeProperties
         | RangeTypeJSON
         | RangeType
         | string
     ): Value;
-    splitNode(
-        path: Path,
-        position: number,
-        properties: NodeProperties
-    ): Value;
+
+    /**
+     * Split a node by `path` at `position` with optional `properties` to apply
+     * to the newly split node.
+     */
+    splitNode(path: Path, position: number, properties?: NodeProperties): Value;
+
+    /**
+     * Map all range objects to apply adjustments with an `iterator`.
+     */
     mapRanges(iterator: (val: Selection | Annotation) => any): Value;
+
+    /**
+     * Map all range objects to apply point adjustments using `range.updatePoints()` with an `iterator`
+     */
     mapPoints(iterator: (point: Point) => Point): Value;
 }
 
