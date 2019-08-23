@@ -49,6 +49,12 @@ const doc = Document.fromJSON({
 
 const schema: SchemaProperties = {
     document: {
+        data: {
+            foo: "bar ",
+            foo2: 5,
+            foo3: true,
+            foo4: (v) => true
+        },
         nodes: [
             {
                 match: [

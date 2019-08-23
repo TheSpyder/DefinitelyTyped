@@ -29,36 +29,38 @@ export interface RulesByNodeType {
     [key: string]: Rules;
 }
 
-export interface ObjectAndType {
+export interface ValidationRule {
     object?: string;
     type?: string;
 }
 
 export interface Rules {
     data?: {
-        [key: string]: (v: any) => boolean;
+        // value or validation function
+        [key: string]: number | string | boolean | ((v: any) => boolean);
     };
-    first?: ObjectAndType | ObjectAndType[];
+    first?: ValidationRule | ValidationRule[];
     isAtomic?: boolean;
     isVoid?: boolean;
-    last?: ObjectAndType | ObjectAndType[];
+    last?: ValidationRule | ValidationRule[];
     marks?: Array<{
         type: string | ((type: string) => boolean)
     }>;
-    next?: ObjectAndType | ObjectAndType[];
+    match?: ValidationRule | ValidationRule[];
+    next?: ValidationRule | ValidationRule[];
     nodes?: Array<{
         min?: number;
         max?: number;
-        match?: ObjectAndType | ObjectAndType[];
+        match?: ValidationRule | ValidationRule[];
     }>;
     normalize?: (editor: Editor, error: SlateError) => void;
-    parent?: ObjectAndType | ObjectAndType[];
+    parent?: ValidationRule | ValidationRule[];
     text?: RegExp | ((text: string) => boolean);
-    previous?: ObjectAndType | ObjectAndType[];
+    previous?: ValidationRule | ValidationRule[];
 }
 
 export interface SchemaProperties {
-    rules?: Array<{ match: ObjectAndType | ObjectAndType[] } & Rules>;
+    rules?: Array<{ match: ValidationRule | ValidationRule[] } & Rules>;
     document?: Rules;
     blocks?: RulesByNodeType;
     inlines?: RulesByNodeType;
