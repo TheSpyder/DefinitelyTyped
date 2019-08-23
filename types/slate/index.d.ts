@@ -1711,7 +1711,7 @@ export class Editor implements Controller {
     insertBlockAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, block: string | Block | BlockProperties | BlockJSON): Editor;
     insertFragmentAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, fragment: Document): Editor;
     insertInlineAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, inline: Inline | InlineProperties | InlineJSON): Editor;
-    insertTextAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, text: string): Editor;
+    insertTextAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, text: string, marks?: Immutable.Set<Mark>): Editor;
     setBlocksAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, properties: string | Block | BlockProperties | BlockJSON): Editor;
     setInlinesAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, properties: string | Inline | InlineProperties | InlineJSON): Editor;
     splitBlockAtRange(range: RangeTypeProperties| RangeTypeJSON | RangeType, height?: number): Editor;
@@ -2634,7 +2634,8 @@ export interface Controller {
      */
     insertTextAtRange(
         range: RangeType | RangeTypeProperties | RangeTypeJSON,
-        text: string
+        text: string,
+        marks?: Immutable.Set<Mark>
         ): Controller;
     /**
      * Set the properties of the block nodes in a range.

@@ -19,7 +19,7 @@ import {
     Decoration,
     Annotation
 } from "slate";
-import { List } from "immutable";
+import { List, Set } from "immutable";
 
 const data = Data.create({ foo: "bar " });
 const value = Value.create({ data });
@@ -186,6 +186,7 @@ editor
 .insertNodeByPath(List([0]), 0, inline)
 .insertText("A bit of rich text, followed by...")
 .insertTextAtRange(range, "More text")
+.insertTextAtRange(range, "More text", Set([Mark.create({type: 'test_mark'})]))
 .insertTextByKey("a", 0, "text")
 .insertTextByPath(List([0]), 0, "text")
 .mergeNodeByKey("b")
