@@ -468,13 +468,6 @@ export interface TextJSON {
     marks?: MarkJSON[];
 }
 
-export interface LeafAndOffset {
-    startOffset: number;
-    endOffset: number;
-    index: number;
-    leaf: Leaf;
-}
-
 export class Text extends Immutable.Record({}) implements TextProperties {
     object: "text";
     key: string;
@@ -501,29 +494,92 @@ export class Text extends Immutable.Record({}) implements TextProperties {
         | Array<MarkProperties | MarkJSON | string>
         | Immutable.Set<MarkProperties | MarkJSON | string>
     ): Text;
+
+    /**
+     * Get an object mapping all the keys in the node to their paths.
+     */
     getKeysToPathsTable(): { [key: string]: number[] };
+
+    /**
+     * Get a list of uniquely-formatted leaves for the text node, given its
+     * existing marks, and its current `annotations` and `decorations`.
+     */
     getLeaves(
         annotations: Immutable.Map<string, Annotation>,
         decorations?: Decoration[] | Immutable.List<Decoration>
     ): Immutable.List<Leaf>;
+
+    /**
+     * Get the first text node of a node, or the node itself.
+     */
     getFirstText(): Text | null;
+
+    /**
+     * Get the last text node of a node, or the node itself.
+     */
     getLastText(): Text | null;
+
     getText(): string;
+
+    /**
+     * Get a node in the tree, or the node itself.
+     */
     getNode(path: Path): Node | null;
+
+    /**
+     * Find the path to a node.
+     */
     getPath(key: Immutable.List<number> | string | Node): Immutable.List<number> | null;
+
     hasNode(path: Path): boolean;
+
+    /**
+     * Insert `text` at `index`.
+     */
     insertText(index: number, string: string): Text;
+
+    /**
+     * Regenerate the node's key.
+     */
     regenerateKey(): Text;
+
     removeMark(mark: MarkProperties | MarkJSON | string): Text;
+
+    /**
+     * Remove text from the text node at `index` for `length`.
+     */
     removeText(index: number, length: number): Text;
+
+    /**
+     * Resolve a path from a path list or key string.
+     *
+     * An `index` can be provided, in which case paths created from a key string
+     * will have the index pushed onto them. This is helpful in cases where you
+     * want to accept either a `path` or a `key, index` combination for targeting
+     * a location in the tree that doesn't exist yet, like when inserting.
+     */
     resolvePath(path: Path, index?: number): Immutable.List<number>;
+
+    /**
+     * Set a `newProperties` on an existing `mark`.
+     */
     setMark(
         properties: MarkProperties | MarkJSON | string,
         newProperties: MarkProperties
     ): Text;
+
+    /**
+     * Split the node into two at `index`.
+     */
     splitText(index: number): Text[];
+
+    /**
+     * Merge the node with an `other` text node.
+     */
     mergeText(other: Text): Text;
+
     normalize(editor: Editor): () => void | void;
+
     validate(editor: Editor): Error | void;
 }
 
@@ -545,11 +601,23 @@ export class Leaf extends Immutable.Record({}) implements LeafProperties {
     text: string;
 
     static create(properties: LeafProperties | LeafJSON): Leaf;
+
+    /**
+     * Create a valid List of `Leaf` from `leaves`
+     */
     static createLeaves(leaves: Immutable.List<Leaf>): Immutable.List<Leaf>;
+
+    /**
+     * Split a list of leaves to two lists; if the leaves are valid leaves, the returned leaves are also valid
+     * Corner Cases:
+     *   1. if offset is smaller than 0, then return [List(), leaves]
+     *   2. if offset is bigger than the text length, then return [leaves, List()]
+     */
     static splitLeaves(
         leaves: Immutable.List<Leaf>,
         offset: number
     ): Array<Immutable.List<Leaf>>;
+
     static createList(
         attrs?:
             | Array<LeafProperties | LeafJSON>
@@ -562,11 +630,18 @@ export class Leaf extends Immutable.Record({}) implements LeafProperties {
         maybeLeafList: any
     ): maybeLeafList is Immutable.List<Leaf>;
 
+    /**
+     * Update a `mark` at leaf, replace with newMark
+     */
     updateMark(mark: Mark, newMark: Mark): Leaf;
-    addMarks(marks: Immutable.Set<Mark>): Leaf;
+
     addMark(mark: Mark): Leaf;
+    addMarks(marks: Immutable.Set<Mark>): Leaf;
     removeMark(mark: Mark): Leaf;
 
+    /**
+     * Insert a text `string` into the leaf at `offset`.
+     */
     insertText(offset: number, string: string): Leaf;
 
     toJSON(): LeafJSON;
