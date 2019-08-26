@@ -972,6 +972,9 @@ export class Selection extends BaseRange implements SelectionProperties {
     isFocused: boolean;
     marks: Immutable.Set<Mark>;
 
+    /**
+     * Check whether the selection is blurred.
+     */
     readonly isBlurred: boolean;
 
     static create(
@@ -998,6 +1001,10 @@ export class Selection extends BaseRange implements SelectionProperties {
     toJS(): SelectionJSON;
 
     isSelection(maybeSelection: any): maybeSelection is Selection;
+
+    /**
+     * Set the `isFocused` property to a new `value`.
+     */
     setIsFocused(value: boolean): Selection;
     setMarks(marks: Immutable.Set<Mark>): Selection;
     setProperties(properties:
@@ -1147,69 +1154,269 @@ export type RangeClassType = Range | Selection | Decoration | Annotation;
 
 // tslint:disable-next-line strict-export-declare-modifiers
 declare class BaseRange extends Immutable.Record({}) {
+    /**
+     * Check whether the range is collapsed.
+     */
     readonly isCollapsed: boolean;
+
+    /**
+     * Check whether the range is expanded.
+     */
     readonly isExpanded: boolean;
+
+    /**
+     * Check whether the range is backward.
+     */
     readonly isBackward: boolean;
+
+    /**
+     * Check whether the range is forward.
+     */
     readonly isForward: boolean;
+
+    /**
+     * Check whether the range isn't set.
+     */
     readonly isUnset: boolean;
+
+    /**
+     * Check whether the range is set.
+     */
     readonly isSet: boolean;
+
+    /**
+     * Get the start point.
+     */
     readonly start: Point;
+
+    /**
+     * Get the end point.
+     */
     readonly end: Point;
 
+    /**
+     * Flip the range.
+     */
     flip(): RangeClassType;
+
+    /**
+     * Move the anchor and focus offsets forward `n` characters.
+     */
     moveForward(n?: number): RangeClassType;
+
+    /**
+     * Move the anchor and focus offsets backward `n` characters.
+     */
     moveBackward(n?: number): RangeClassType;
 
+    /**
+     * Move the anchor offset backward `n` characters.
+     */
     moveAnchorBackward(n?: number): RangeClassType;
+
+    /**
+     * Move the anchor offset forward `n` characters.
+     */
     moveAnchorForward(n?: number): RangeClassType;
+
+    /**
+     * Move the range's anchor point to a new `path` and `offset`.
+     *
+     * Optionally, the `path` can be a key string, or omitted entirely in which
+     * case it would be the offset number.
+     */
     moveAnchorTo(path: string | number | Immutable.List<number>, offset?: number): RangeClassType;
+
+    /**
+     * Move the range's anchor point to the start of a `node`.
+     */
     moveAnchorToStartOfNode(node: Node): RangeClassType;
+
+    /**
+     * Move the range's anchor point to the end of a `node`.
+     */
     moveAnchorToEndOfNode(node: Node): RangeClassType;
 
+    /**
+     * Move the end offset backward `n` characters.
+     */
     moveEndBackward(n?: number): RangeClassType;
+
+    /**
+     * Move the end offset forward `n` characters.
+     */
     moveEndForward(n?: number): RangeClassType;
+
+    /**
+     * Move the range's end point to a new `path` and `offset`.
+     *
+     * Optionally, the `path` can be a key string, or omitted entirely in which
+     * case it would be the offset number.
+     */
     moveEndTo(path: string | number | Immutable.List<number>, offset?: number): RangeClassType;
+
+    /**
+     * Move the range's end point to the start of a `node`.
+     */
     moveEndToStartOfNode(node: Node): RangeClassType;
+
+    /**
+     * Move the range's end point to the end of a `node`.
+     */
     moveEndToEndOfNode(node: Node): RangeClassType;
 
+    /**
+     * Move the focus offset backward `n` characters.
+     */
     moveFocusBackward(n?: number): RangeClassType;
+
+    /**
+     * Move the focus offset forward `n` characters.
+     */
     moveFocusForward(n?: number): RangeClassType;
+
+    /**
+     * Move the range's focus point to a new `path` and `offset`.
+     *
+     * Optionally, the `path` can be a key string, or omitted entirely in which
+     * case it would be the offset number.
+     */
     moveFocusTo(path: string | number | Immutable.List<number>, offset?: number): RangeClassType;
+
+    /**
+     * Move the range's focus point to the start of a `node`.
+     */
     moveFocusToStartOfNode(node: Node): RangeClassType;
+
+    /**
+     * Move the range's focus point to the end of a `node`.
+     */
     moveFocusToEndOfNode(node: Node): RangeClassType;
 
+    /**
+     * Move the start offset backward `n` characters.
+     */
     moveStartBackward(n?: number): RangeClassType;
+
+    /**
+     * Move the start offset forward `n` characters.
+     */
     moveStartForward(n?: number): RangeClassType;
+
+    /**
+     * Move the range's start point to a new `path` and `offset`.
+     *
+     * Optionally, the `path` can be a key string, or omitted entirely in which
+     * case it would be the offset number.
+     */
     moveStartTo(path: string | number | Immutable.List<number>, offset?: number): RangeClassType;
+
+    /**
+     * Move the range's start point to the start of a `node`.
+     */
     moveStartToStartOfNode(node: Node): RangeClassType;
+
+    /**
+     * Move the range's start point to the end of a `node`.
+     */
     moveStartToEndOfNode(node: Node): RangeClassType;
 
+    /**
+     * Move range's points to a new `path` and `offset`.
+     */
+    moveTo(path: string | number | Immutable.List<number>, offset?: number): RangeClassType;
+
+    /**
+     * Move the focus point to the anchor point.
+     */
     moveToAnchor(): RangeClassType;
+
+    /**
+     * Move the start point to the end point.
+     */
     moveToEnd(): RangeClassType;
+
+    /**
+     * Move the range's points to the end of a `node`.
+     */
     moveToEndOfNode(node: Node): RangeClassType;
+
+    /**
+     * Move the anchor point to the focus point.
+     */
     moveToFocus(): RangeClassType;
+
+    /**
+     * Move to the entire range of `start` and `end` nodes.
+     */
     moveToRangeOfNode(start: Node, end?: Node): RangeClassType;
+
+    /**
+     * Move the end point to the start point.
+     */
     moveToStart(): RangeClassType;
+
+    /**
+     * Move the range's points to the start of a `node`.
+     */
     moveToStartOfNode(node: Node): RangeClassType;
 
+    /**
+     * Normalize the range, relative to a `node`, ensuring that the anchor
+     * and focus nodes of the range always refer to leaf text nodes.
+     */
     normalize(node: Node): RangeClassType;
 
+    /**
+     * Set the anchor point to a new `anchor`.
+     */
     setAnchor(anchor: Point): RangeClassType;
+
+    /**
+     * Set the end point to a new `point`.
+     */
     setEnd(point: Point): RangeClassType;
+
+    /**
+     * Set the focus point to a new `focus`.
+     */
     setFocus(focus: Point): RangeClassType;
-    setIsAtomic(value: boolean): RangeClassType;
+
+
     setIsFocused(value: boolean): RangeClassType;
     setMarks(marks: Immutable.Set<Mark>): RangeClassType;
+
+    /**
+     * Set the anchor and focus points to new `values`.
+     */
     setPoints(values: Point[]): RangeClassType;
+
+    /**
+     * Set the anchor and focus points with `updater` callback
+     */
     updatePoints(updater: (point: Point) => Point): RangeClassType;
+
+    /**
+     * Set the start point to a new `point`.
+     */
     setStart(point: Point): RangeClassType;
-    setProperties(
-        properties: RangeType | RangeTypeJSON
-    ): RangeClassType;
+
+    /**
+     * Set new `properties` on the range.
+     */
+    setProperties(properties: RangeType | RangeTypeJSON): RangeClassType;
 
     toJSON(): RangeTypeJSON;
     toJS(): RangeTypeJSON;
+
+    /**
+     * Return a `Range` instance from any range-like instance.
+     */
     toRange(): RangeClassType;
+
+    /**
+     * Unset the range.
+     */
     unset(): RangeClassType;
 }
 
