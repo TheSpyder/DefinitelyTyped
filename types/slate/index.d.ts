@@ -1446,31 +1446,119 @@ export class Point extends Immutable.Record({}) implements PointProperties {
     static fromJS(properties: PointJSON | PointProperties): Point;
     static isPoint(maybePoint: any): maybePoint is Point;
 
+    /**
+     * Check whether all properties of the point are set.
+     */
     readonly isSet: boolean;
+
+    /**
+     * Check whether any property of the point is not set.
+     */
     readonly isUnset: boolean;
 
     isAfterPoint(point: Point): boolean;
+
+    /**
+     * Check whether the point is after a `range`.
+     */
     isAfterRange(range: RangeType): boolean;
+
+    /**
+     * Check whether the point is at the end of a `range`.
+     */
     isAtEndofRange(range: RangeType): boolean;
+
+    /**
+     * Check whether the point is at the start of a `range`.
+     */
     isAtStartOfRange(range: RangeType): boolean;
+
+    /**
+     * Check whether the point is before another `point`.
+     */
     isBeforePoint(point: Point): boolean;
+
+    /**
+     * Check whether the point is before a `range`.
+     */
     isBeforeRange(range: RangeType): boolean;
+
+    /**
+     * Check whether the point is inside a `range`.
+     */
     isInRange(range: RangeType): boolean;
+
+    /**
+     * Check whether the point is at the end of a `node`.
+     */
     isAtEndOfNode(node: Node): boolean;
+
+    /**
+     * Check whether the point is at the start of a `node`.
+     */
     isAtStartOfNode(node: Node): boolean;
+
+    /**
+     * Check whether the point is in a `node`.
+     */
     isInNode(node: Node): boolean;
 
+    /**
+     * Move the point's offset backward `n` characters.
+     */
+
     moveBackward(n?: number): this;
+
+    /**
+     * Move the point's offset forward `n` characters.
+     */
     moveForward(n?: number): this;
+
+    /**
+     * Move the point's anchor point to a new `path` and `offset`.
+     *
+     * Optionally, the `path` can be a key string, or omitted entirely in which
+     * case it would be the offset number.
+     */
     moveTo(path: string | number | Immutable.List<number>, offset?: number): this;
+
+    /**
+     * Move the point's anchor point to the start of a `node`.
+     */
     moveToStartOfNode(node: Node): this;
+
+    /**
+     * Move the point's anchor point to the end of a `node`.
+     */
     moveToEndOfNode(node: Node): this;
+
+    /**
+     * Normalize the point relative to a `node`, ensuring that its key and path
+     * reference a text node, or that it gets unset.
+     */
     normalize(node: Node): this;
+
+    /**
+     * Set the point's key to a new `key`.
+     */
     setKey(key: string): this;
+
+    /**
+     * Set the point's offset to a new `offset`.
+     */
     setOffset(offset: number): this;
+
+    /**
+     * Set the point's path to a new `path`.
+     */
     setPath(path: Immutable.List<number> | number[]): this;
+
     toJSON(options?: { preserveKeys?: boolean }): PointJSON;
     toJS(options?: { preserveKeys?: boolean }): PointJSON;
+
+    /**
+     * * Unset the point.
+     */
     unset(): this;
 }
 
